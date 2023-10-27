@@ -1,0 +1,2 @@
+[2023-10-26 22:22:42] [ INFO ] [OdontologoDAOH2:76] Listado de odontólogos obtenido: [Odontologo{id=1, numeroMatricula=123456, nombre='Fernando', Apellido='Gomez'}, Odontologo{id=2, numeroMatricula=789012, nombre='Mario', Apellido='Rodriguez'}]
+[2023-10-26 22:22:42] [ INFO ] [OdontologoDAOEnMemoria:24] Listado de odontólogos obtenido: []
