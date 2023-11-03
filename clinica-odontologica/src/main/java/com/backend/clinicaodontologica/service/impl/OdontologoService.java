@@ -1,11 +1,14 @@
-package com.backend.clinicaodontologica.service;
+package com.backend.clinicaodontologica.service.impl;
 
 import com.backend.clinicaodontologica.dao.IDao;
 import com.backend.clinicaodontologica.model.Odontologo;
+import com.backend.clinicaodontologica.service.IOdontologoService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public class OdontologoService {
+@Service
+public class OdontologoService implements IOdontologoService {
     private IDao<Odontologo> odontologoIDao;
 
     public OdontologoService(IDao<Odontologo> odontologoIDao) {
@@ -14,6 +17,11 @@ public class OdontologoService {
 
     public  Odontologo registrarOdontologo(Odontologo odontologo) {
         return odontologoIDao.registrar(odontologo);
+    }
+
+    @Override
+    public Odontologo buscarOdontologoPorId(int id) {
+        return odontologoIDao.buscarPorId(id);
     }
 
     public List<Odontologo> listarOdontologos() {

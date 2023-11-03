@@ -6,12 +6,14 @@ import com.backend.clinicaodontologica.model.Domicilio;
 import com.backend.clinicaodontologica.model.Paciente;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class PacienteDAOH2 implements IDao<Paciente> {
     private final Logger LOGGER = LoggerFactory.getLogger(PacienteDAOH2.class);
     private DomicilioDAOH2 domicilioDAOH2;

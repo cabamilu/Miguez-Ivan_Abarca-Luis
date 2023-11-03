@@ -1,9 +1,9 @@
 package com.backend.clinicaodontologica.service;
 
 import com.backend.clinicaodontologica.dao.IDao;
-import com.backend.clinicaodontologica.dao.impl.OdontologoDAOEnMemoria;
 import com.backend.clinicaodontologica.dao.impl.OdontologoDAOH2;
 import com.backend.clinicaodontologica.model.Odontologo;
+import com.backend.clinicaodontologica.service.impl.OdontologoService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +12,6 @@ import java.sql.DriverManager;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class OdontologoServiceTest {
     private OdontologoService odontologoService;
@@ -43,15 +42,5 @@ class OdontologoServiceTest {
         List<Odontologo> odontologos = odontologoService.listarOdontologos();
 
         assertEquals( 2, odontologos.size());
-    }
-
-    @Test
-    void listarOdontologosEnMemoria() {
-        IDao<Odontologo> odontologoEnMemoria = new OdontologoDAOEnMemoria();
-        odontologoService = new OdontologoService(odontologoEnMemoria);
-
-        List<Odontologo> odontologos = odontologoService.listarOdontologos();
-
-        assertTrue(odontologos.isEmpty());
     }
 }

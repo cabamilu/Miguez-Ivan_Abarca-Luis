@@ -5,11 +5,13 @@ import com.backend.clinicaodontologica.dao.IDao;
 import com.backend.clinicaodontologica.model.Odontologo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class OdontologoDAOH2 implements IDao<Odontologo> {
     private final Logger LOGGER = LoggerFactory.getLogger(OdontologoDAOH2.class);
     @Override
@@ -92,7 +94,32 @@ public class OdontologoDAOH2 implements IDao<Odontologo> {
 
     @Override
     public Odontologo buscarPorId(int id) {
-        return null;
+        Connection connection = null;
+        Odontologo odontologo = null;
+
+        try {
+            connection = H2Connection.getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM ODONTOLOGOS WHERE ID = ?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                odontologo = crearObjetoOdontologo(rs);
+
+            }
+            LOGGER.info("Se ha encontrado el odontólogo " + odontologo);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception ex) {
+                LOGGER.error("Ha ocurrido un error al intentar cerrar la bdd. " + ex.getMessage());
+                ex.printStackTrace();
+            }
+        }
+
+        return odontologo;
     }
 
     private Odontologo crearObjetoOdontologo(ResultSet resultSet) throws SQLException {

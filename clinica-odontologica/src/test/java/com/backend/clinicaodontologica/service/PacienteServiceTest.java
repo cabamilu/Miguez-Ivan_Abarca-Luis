@@ -3,6 +3,7 @@ package com.backend.clinicaodontologica.service;
 import com.backend.clinicaodontologica.dao.impl.PacienteDAOH2;
 import com.backend.clinicaodontologica.model.Domicilio;
 import com.backend.clinicaodontologica.model.Paciente;
+import com.backend.clinicaodontologica.service.impl.PacienteService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
