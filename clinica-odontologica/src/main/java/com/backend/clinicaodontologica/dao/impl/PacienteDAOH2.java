@@ -107,6 +107,47 @@ public class PacienteDAOH2 implements IDao<Paciente> {
     }
 
     @Override
+    public void eliminar(int id) {
+        Connection connection = null;
+
+        try {
+            connection = H2Connection.getConnection();
+            connection.setAutoCommit(false);
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM PACIENTES WHERE ID = ?");
+            ps.setInt(1, id);
+            int pacientesAfectados = ps.executeUpdate();
+
+            connection.commit();
+
+            if  (pacientesAfectados == 1) {
+                LOGGER.info("Se ha eliminado el paciente con id " + id);
+            } else {
+                LOGGER.info("No fue posible eliminar el paciente con id " + id);
+            }
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            e.printStackTrace();
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                    LOGGER.info("Tuvimos un problema");
+                    LOGGER.error(e.getMessage());
+                    e.printStackTrace();
+                } catch (SQLException exception) {
+                    LOGGER.error(exception.getMessage());
+                    exception.printStackTrace();
+                }
+            }
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception ex) {
+                LOGGER.error("No se pudo cerrar la conexion: " + ex.getMessage());
+            }
+        }
+    }
+
+    @Override
     public List<Paciente> listarTodos() {
         Connection connection = null;
         List<Paciente> pacientes = new ArrayList<>();

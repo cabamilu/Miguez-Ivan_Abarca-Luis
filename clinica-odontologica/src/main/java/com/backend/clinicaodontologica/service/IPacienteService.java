@@ -11,5 +11,6 @@ public interface IPacienteService {
     Paciente buscarPacientePorId(int id);
 
     List<Paciente> listarPacientes();
+    void eliminarPaciente(int id);
 
 }

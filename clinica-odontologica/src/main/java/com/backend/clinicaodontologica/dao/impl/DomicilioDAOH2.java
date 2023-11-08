@@ -94,6 +94,11 @@ public class DomicilioDAOH2 implements IDao<Domicilio> {
     }
 
     @Override
+    public void eliminar(int id) {
+
+    }
+
+    @Override
     public List<Domicilio> listarTodos() {
         Connection connection = null;
         List<Domicilio> domicilios = new ArrayList<>();

@@ -122,6 +122,11 @@ public class OdontologoDAOH2 implements IDao<Odontologo> {
         return odontologo;
     }
 
+    @Override
+    public void eliminar(int id) {
+
+    }
+
     private Odontologo crearObjetoOdontologo(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");
         int numeroMatricula = resultSet.getInt("matricula");

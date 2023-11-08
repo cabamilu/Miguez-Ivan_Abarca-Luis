@@ -24,4 +24,9 @@ public class PacienteService implements IPacienteService {
     }
 
     public List<Paciente> listarPacientes() { return  pacienteIDao.listarTodos(); }
+
+    @Override
+    public void eliminarPaciente(int id) {
+        pacienteIDao.eliminar(id);
+    }
 }
