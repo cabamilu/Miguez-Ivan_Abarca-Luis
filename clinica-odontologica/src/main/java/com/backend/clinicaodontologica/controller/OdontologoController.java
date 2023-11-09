@@ -2,10 +2,7 @@ package com.backend.clinicaodontologica.controller;
 
 import com.backend.clinicaodontologica.model.Odontologo;
 import com.backend.clinicaodontologica.service.IOdontologoService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,13 +15,16 @@ public class OdontologoController {
         this.iOdontologoService = iOdontologoService;
     }
 
-    @GetMapping("/listar")
+    @GetMapping
     public List<Odontologo> listarOdontologos() {
         return iOdontologoService.listarOdontologos();
     }
 
-    @GetMapping("/buscarPorId")
-    public Odontologo buscarOdontologoPorId(@RequestParam int id) {
+    @GetMapping("/{id}")
+    public Odontologo buscarOdontologoPorId(@PathVariable int id) {
         return iOdontologoService.buscarOdontologoPorId(id);
     }
+
+    @DeleteMapping("/eliminar/{id}")
+    public void eliminarOdontologoPorId(@PathVariable int id) { iOdontologoService.eliminarOdontologo(id); }
 }

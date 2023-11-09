@@ -27,4 +27,9 @@ public class OdontologoService implements IOdontologoService {
     public List<Odontologo> listarOdontologos() {
         return odontologoIDao.listarTodos();
     }
+
+    @Override
+    public void eliminarOdontologo(int id) {
+        odontologoIDao.eliminar(id);
+    }
 }

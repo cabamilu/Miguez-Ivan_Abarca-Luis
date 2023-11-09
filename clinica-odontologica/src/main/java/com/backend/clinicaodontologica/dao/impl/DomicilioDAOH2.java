@@ -99,6 +99,11 @@ public class DomicilioDAOH2 implements IDao<Domicilio> {
     }
 
     @Override
+    public Domicilio actualizar(Domicilio domicilio) {
+        return null;
+    }
+
+    @Override
     public List<Domicilio> listarTodos() {
         Connection connection = null;
         List<Domicilio> domicilios = new ArrayList<>();

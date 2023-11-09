@@ -124,7 +124,48 @@ public class OdontologoDAOH2 implements IDao<Odontologo> {
 
     @Override
     public void eliminar(int id) {
+        Connection connection = null;
 
+        try {
+            connection = H2Connection.getConnection();
+            connection.setAutoCommit(false);
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM ODONTOLOGOS WHERE ID = ?");
+            ps.setInt(1, id);
+            int odontologosAfectados = ps.executeUpdate();
+
+            connection.commit();
+
+            if  (odontologosAfectados == 1) {
+                LOGGER.info("Se ha eliminado el odontólogo con id " + id);
+            } else {
+                LOGGER.info("No fue posible eliminar el odontólogo con id " + id);
+            }
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            e.printStackTrace();
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                    LOGGER.info("Tuvimos un problema");
+                    LOGGER.error(e.getMessage());
+                    e.printStackTrace();
+                } catch (SQLException exception) {
+                    LOGGER.error(exception.getMessage());
+                    exception.printStackTrace();
+                }
+            }
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception ex) {
+                LOGGER.error("No se pudo cerrar la conexion: " + ex.getMessage());
+            }
+        }
+    }
+
+    @Override
+    public Odontologo actualizar(Odontologo odontologo) {
+        return null;
     }
 
     private Odontologo crearObjetoOdontologo(ResultSet resultSet) throws SQLException {

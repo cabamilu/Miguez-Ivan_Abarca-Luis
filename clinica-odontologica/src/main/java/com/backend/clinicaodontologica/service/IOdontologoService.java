@@ -8,5 +8,6 @@ public interface IOdontologoService {
     Odontologo registrarOdontologo(Odontologo odontologo);
     Odontologo buscarOdontologoPorId(int id);
     List<Odontologo> listarOdontologos();
+    void eliminarOdontologo(int id);
 
 }
