@@ -4,19 +4,19 @@ public class Odontologo {
     private int id;
     private int numeroMatricula;
     private String nombre;
-    private String Apellido;
+    private String apellido;
 
     public Odontologo(int numeroMatricula, String nombre, String apellido) {
         this.numeroMatricula = numeroMatricula;
         this.nombre = nombre;
-        Apellido = apellido;
+        this.apellido = apellido;
     }
 
     public Odontologo(int id, int numeroMatricula, String nombre, String apellido) {
         this.id = id;
         this.numeroMatricula = numeroMatricula;
         this.nombre = nombre;
-        Apellido = apellido;
+        this.apellido = apellido;
     }
 
     public int getNumeroMatricula() {
@@ -36,11 +36,11 @@ public class Odontologo {
     }
 
     public String getApellido() {
-        return Apellido;
+        return apellido;
     }
 
     public void setApellido(String apellido) {
-        Apellido = apellido;
+        this.apellido = apellido;
     }
 
     public int getId() {
@@ -57,7 +57,7 @@ public class Odontologo {
                 "id=" + id +
                 ", numeroMatricula=" + numeroMatricula +
                 ", nombre='" + nombre + '\'' +
-                ", Apellido='" + Apellido + '\'' +
+                ", Apellido='" + apellido + '\'' +
                 '}';
     }
 }

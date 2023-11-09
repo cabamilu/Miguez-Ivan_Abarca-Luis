@@ -34,9 +34,8 @@ public class PacienteController {
         return iPacienteService.registrarPaciente(paciente);
     }
 
-    //PUT
     @PutMapping("/actualizar")
-    public Paciente actualizarPaciente(@RequestBody Paciente paciente){
+    public Paciente actualizarPaciente(@RequestBody @Valid PacienteEntradaDto paciente){
         return iPacienteService.actualizarPaciente(paciente);
     }
 }

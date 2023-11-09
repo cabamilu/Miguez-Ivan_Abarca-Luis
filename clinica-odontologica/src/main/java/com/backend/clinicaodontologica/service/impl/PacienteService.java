@@ -42,8 +42,11 @@ public class PacienteService implements IPacienteService {
     }
 
     @Override
-    public Paciente actualizarPaciente(Paciente paciente) {
-        return pacienteIDao.actualizar(paciente);
+    public Paciente actualizarPaciente(PacienteEntradaDto paciente) {
+        //convertimos mediante el mapper de dto a entidad
+        Paciente pacienteEntidad = modelMapper.map(paciente, Paciente.class);
+        //lamamos a la capa de persistencia
+        return pacienteIDao.actualizar(pacienteEntidad);
     }
     private void configureMapping(){
         modelMapper.typeMap(PacienteEntradaDto.class, Paciente.class)

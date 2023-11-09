@@ -12,5 +12,5 @@ public interface IPacienteService {
 
     List<Paciente> listarPacientes();
     void eliminarPaciente(int id);
-    Paciente actualizarPaciente(Paciente paciente);
+    Paciente actualizarPaciente(PacienteEntradaDto paciente);
 }

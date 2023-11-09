@@ -1,9 +1,13 @@
 package com.backend.clinicaodontologica.controller;
 
+import com.backend.clinicaodontologica.dto.entrada.odontologo.OdontologoEntradaDto;
+import com.backend.clinicaodontologica.dto.entrada.paciente.PacienteEntradaDto;
 import com.backend.clinicaodontologica.model.Odontologo;
+import com.backend.clinicaodontologica.model.Paciente;
 import com.backend.clinicaodontologica.service.IOdontologoService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,4 +31,15 @@ public class OdontologoController {
 
     @DeleteMapping("/eliminar/{id}")
     public void eliminarOdontologoPorId(@PathVariable int id) { iOdontologoService.eliminarOdontologo(id); }
+
+    @PostMapping("/registrar")
+    public Odontologo registrarOdontologo(@RequestBody @Valid OdontologoEntradaDto odontologo){
+        return iOdontologoService.registrarOdontologo(odontologo);
+    }
+
+    @PutMapping("/actualizar")
+    public Odontologo actualizarOdontologo(@RequestBody @Valid OdontologoEntradaDto odontologo){
+        return iOdontologoService.actualizarOdontologo(odontologo);
+    }
+
 }
