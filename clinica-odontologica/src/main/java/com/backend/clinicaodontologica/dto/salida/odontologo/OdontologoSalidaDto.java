@@ -1,21 +1,15 @@
-package com.backend.clinicaodontologica.model;
+package com.backend.clinicaodontologica.dto.salida.odontologo;
 
-public class Odontologo {
+public class OdontologoSalidaDto {
     private int id;
     private int numeroMatricula;
     private String nombre;
     private String apellido;
 
-    public Odontologo() {
+    public OdontologoSalidaDto() {
     }
 
-    public Odontologo(int numeroMatricula, String nombre, String apellido) {
-        this.numeroMatricula = numeroMatricula;
-        this.nombre = nombre;
-        this.apellido = apellido;
-    }
-
-    public Odontologo(int id, int numeroMatricula, String nombre, String apellido) {
+    public OdontologoSalidaDto(int id, int numeroMatricula, String nombre, String apellido) {
         this.id = id;
         this.numeroMatricula = numeroMatricula;
         this.nombre = nombre;
@@ -53,4 +47,5 @@ public class Odontologo {
     public void setId(int id) {
         this.id = id;
     }
+
 }

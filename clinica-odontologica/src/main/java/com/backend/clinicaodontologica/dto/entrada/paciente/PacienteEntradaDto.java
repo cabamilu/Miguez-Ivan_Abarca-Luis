@@ -3,10 +3,7 @@ package com.backend.clinicaodontologica.dto.entrada.paciente;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.validation.Valid;
-import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 public class PacienteEntradaDto {
@@ -21,8 +18,8 @@ public class PacienteEntradaDto {
     private String apellido;
 
     @NotNull(message = "El dni del paciente no puede ser nulo")
-    @Size(max = 12, message = "El nombre debe tener hasta 12 digitos")
-    private Integer dni;
+    @Digits(integer = 12, fraction = 0, message = "El dni debe tener como máximo 12 dígitos")
+    private int dni;
 
     @FutureOrPresent(message = "La fecha no puede ser anterior al día de hoy")
     @NotNull(message = "Debe especificarse la fecha de ingreso del paciente")
@@ -38,7 +35,7 @@ public class PacienteEntradaDto {
     public PacienteEntradaDto() {
     }
 
-    public PacienteEntradaDto(String nombre, String apellido, Integer dni, LocalDate fechaIngreso, DomicilioEntradaDto domicilioEntradaDto) {
+    public PacienteEntradaDto(String nombre, String apellido, int dni, LocalDate fechaIngreso, DomicilioEntradaDto domicilioEntradaDto) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
@@ -62,11 +59,11 @@ public class PacienteEntradaDto {
         this.apellido = apellido;
     }
 
-    public Integer getDni() {
+    public int getDni() {
         return dni;
     }
 
-    public void setDni(Integer dni) {
+    public void setDni(int dni) {
         this.dni = dni;
     }
 

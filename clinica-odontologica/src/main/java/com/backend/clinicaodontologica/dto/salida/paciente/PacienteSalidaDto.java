@@ -1,33 +1,25 @@
-package com.backend.clinicaodontologica.model;
+package com.backend.clinicaodontologica.dto.salida.paciente;
 
 import java.time.LocalDate;
 
-public class Paciente {
+public class PacienteSalidaDto {
     private int id;
     private String nombre;
     private String apellido;
     private int dni;
     private LocalDate fechaIngreso;
-    private Domicilio domicilio;
+    private DomicilioSalidaDto domicilioSalidaDto;
 
-    public Paciente() {
+    public PacienteSalidaDto() {
     }
 
-    public Paciente(int id, String nombre, String apellido, int dni, LocalDate fechaIngreso, Domicilio domicilio) {
+    public PacienteSalidaDto(int id, String nombre, String apellido, int dni, LocalDate fechaIngreso, DomicilioSalidaDto domicilioSalidaDto) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
         this.fechaIngreso = fechaIngreso;
-        this.domicilio = domicilio;
-    }
-
-    public Paciente(String nombre, String apellido, int dni, LocalDate fechaIngreso, Domicilio domicilio) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.dni = dni;
-        this.fechaIngreso = fechaIngreso;
-        this.domicilio = domicilio;
+        this.domicilioSalidaDto = domicilioSalidaDto;
     }
 
     public int getId() {
@@ -70,11 +62,12 @@ public class Paciente {
         this.fechaIngreso = fechaIngreso;
     }
 
-    public Domicilio getDomicilio() {
-        return domicilio;
+    public DomicilioSalidaDto getDomicilioSalidaDto() {
+        return domicilioSalidaDto;
     }
 
-    public void setDomicilio(Domicilio domicilio) {
-        this.domicilio = domicilio;
+    public void setDomicilioSalidaDto(DomicilioSalidaDto domicilio) {
+        this.domicilioSalidaDto = domicilio;
     }
+
 }
