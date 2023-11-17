@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 
 public class OdontologoEntradaDto {
     @NotNull(message = "El campo numero matricula no puede ser nulo")
-    @Digits(integer = 8, fraction = 0, message = "El número matricula debe tener como máximo 8 dígitos")
+    @Digits(integer = 10, fraction = 0, message = "El número matricula debe tener como máximo 10 dígitos")
     //@Pattern(regexp = "\\d{1,8}", message = "El número matricula debe tener como máximo 8 dígitos")
     private int numeroMatricula;
     @NotNull(message = "El nombre del odontólogo no puede ser nulo")

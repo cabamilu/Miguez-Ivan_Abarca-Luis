@@ -1,12 +1,9 @@
 package com.backend.clinicaodontologica.service.impl;
 
-import com.backend.clinicaodontologica.dao.IDao;
 import com.backend.clinicaodontologica.dto.entrada.odontologo.OdontologoEntradaDto;
 import com.backend.clinicaodontologica.dto.modificacion.OdontologoModificacionEntradaDto;
 import com.backend.clinicaodontologica.dto.salida.odontologo.OdontologoSalidaDto;
-import com.backend.clinicaodontologica.dto.salida.paciente.PacienteSalidaDto;
 import com.backend.clinicaodontologica.model.Odontologo;
-import com.backend.clinicaodontologica.model.Paciente;
 import com.backend.clinicaodontologica.repository.IOdontologoRepository;
 import com.backend.clinicaodontologica.service.IOdontologoService;
 import com.backend.clinicaodontologica.utils.JsonPrinter;
@@ -24,7 +21,7 @@ public class OdontologoService implements IOdontologoService {
     private IOdontologoRepository odontologoRepository;
     private ModelMapper modelMapper;
 
-    public OdontologoService(private IOdontologoRepository odontologoRepository, ModelMapper modelMapper) {
+    public OdontologoService(IOdontologoRepository odontologoRepository, ModelMapper modelMapper) {
         this.odontologoRepository = odontologoRepository;
         this.modelMapper = modelMapper;
         configureMapping();
@@ -51,7 +48,7 @@ public class OdontologoService implements IOdontologoService {
 
         if(odontologoEncontrado != null) {
             odontologoSalidaDto = modelMapper.map(odontologoEncontrado, OdontologoSalidaDto.class);
-            LOGGER.info("Odontologo encontrado: {}", odontologoSalidaDto);
+            LOGGER.info("Odontologo encontrado: {}", JsonPrinter.toString(odontologoSalidaDto));
         } else LOGGER.error("El id no se encuentra registrado en la base de datos");
 
         return odontologoSalidaDto;
@@ -63,7 +60,7 @@ public class OdontologoService implements IOdontologoService {
                 .map(odontologo -> modelMapper.map(odontologo, OdontologoSalidaDto.class))
                 .toList();
 
-        LOGGER.info("Listado de todos los odontologos: {}", odontologosSalidaDto);
+        LOGGER.info("Listado de todos los odontologos: {}", JsonPrinter.toString(odontologosSalidaDto));
         return odontologosSalidaDto;
     }
 

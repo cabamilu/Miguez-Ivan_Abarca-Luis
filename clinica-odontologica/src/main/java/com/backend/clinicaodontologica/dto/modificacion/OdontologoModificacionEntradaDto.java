@@ -13,7 +13,6 @@ public class OdontologoModificacionEntradaDto {
     private Long id;
 
     @NotNull(message = "La matricula del odontólogo no puede ser nula")
-    @NotBlank(message = "Debe especificarse la matricula del odontólogo")
     @Digits(integer = 10, fraction = 0, message = "El número debe tener como máximo 10 dígitos")
     private int numeroMatricula;
 

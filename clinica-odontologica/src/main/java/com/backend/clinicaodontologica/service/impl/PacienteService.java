@@ -1,6 +1,5 @@
 package com.backend.clinicaodontologica.service.impl;
 
-import com.backend.clinicaodontologica.dao.IDao;
 import com.backend.clinicaodontologica.dto.entrada.paciente.PacienteEntradaDto;
 import com.backend.clinicaodontologica.dto.modificacion.PacienteModificacionEntradaDto;
 import com.backend.clinicaodontologica.dto.salida.paciente.PacienteSalidaDto;
@@ -49,7 +48,7 @@ public class PacienteService implements IPacienteService {
 
         if (pacienteEncontrado != null) {
             pacienteSalidaDto = modelMapper.map(pacienteEncontrado, PacienteSalidaDto.class);
-            LOGGER.info("Paciente encontrado: {}", pacienteSalidaDto);
+            LOGGER.info("Paciente encontrado: {}", JsonPrinter.toString(pacienteSalidaDto));
         } else LOGGER.error("El id no se encuentra registrado en la base de datos");
 
         return  pacienteSalidaDto;
@@ -61,7 +60,7 @@ public class PacienteService implements IPacienteService {
                 .map(paciente -> modelMapper.map(paciente, PacienteSalidaDto.class))
                 .toList();
 
-        LOGGER.info("Listado de todos los pacientes: {}", pacientesSalidaDto);
+        LOGGER.info("Listado de todos los pacientes: {}", JsonPrinter.toString(pacientesSalidaDto));
         return  pacientesSalidaDto;
     }
 
@@ -101,6 +100,7 @@ public class PacienteService implements IPacienteService {
                 .addMappings(modelMapper -> modelMapper.map(PacienteEntradaDto::getDomicilioEntradaDto, Paciente::setDomicilio));
         modelMapper.typeMap(Paciente.class, PacienteSalidaDto.class)
                 .addMappings(modelMapper -> modelMapper.map(Paciente::getDomicilio, PacienteSalidaDto::setDomicilioSalidaDto));
-        modelMapper.typeMap(PacienteModificacionEntradaDto.class, Paciente.class);
+        modelMapper.typeMap(PacienteModificacionEntradaDto.class, Paciente.class)
+                .addMappings(modelMapper -> modelMapper.map(PacienteModificacionEntradaDto::getDomicilioModificacionEntradaDto, Paciente::setDomicilio));
     }
 }

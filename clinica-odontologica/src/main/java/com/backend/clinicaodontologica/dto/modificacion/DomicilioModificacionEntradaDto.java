@@ -17,7 +17,6 @@ public class DomicilioModificacionEntradaDto {
 
     @NotNull(message = "El campo numero no puede ser nulo")
     @Digits(integer = 8, fraction = 0, message = "El número debe tener como máximo 8 dígitos")
-
     private Integer numero;
 
     @NotNull(message = "El campo localidad no puede ser nulo")

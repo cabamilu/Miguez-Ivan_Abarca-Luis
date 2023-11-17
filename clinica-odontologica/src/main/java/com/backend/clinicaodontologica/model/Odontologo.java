@@ -8,7 +8,7 @@ public class Odontologo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(length = 8, nullable = false)
+    @Column(length = 10, nullable = false)
     private int numeroMatricula;
     @Column(length = 50, nullable = false)
     private String nombre;
