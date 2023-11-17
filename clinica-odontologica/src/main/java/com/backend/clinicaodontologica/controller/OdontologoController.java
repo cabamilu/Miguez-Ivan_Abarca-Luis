@@ -23,7 +23,7 @@ public class OdontologoController {
         return iOdontologoService.registrarOdontologo(odontologo);
     }
     @GetMapping("/{id}")
-    public OdontologoSalidaDto buscarOdontologoPorId(@PathVariable int id) {
+    public OdontologoSalidaDto buscarOdontologoPorId(@PathVariable Long id) {
         return iOdontologoService.buscarOdontologoPorId(id);
     }
     @GetMapping

@@ -2,9 +2,12 @@ package com.backend.clinicaodontologica.service.impl;
 
 import com.backend.clinicaodontologica.dao.IDao;
 import com.backend.clinicaodontologica.dto.entrada.odontologo.OdontologoEntradaDto;
+import com.backend.clinicaodontologica.dto.modificacion.OdontologoModificacionEntradaDto;
 import com.backend.clinicaodontologica.dto.salida.odontologo.OdontologoSalidaDto;
+import com.backend.clinicaodontologica.dto.salida.paciente.PacienteSalidaDto;
 import com.backend.clinicaodontologica.model.Odontologo;
 import com.backend.clinicaodontologica.model.Paciente;
+import com.backend.clinicaodontologica.repository.IOdontologoRepository;
 import com.backend.clinicaodontologica.service.IOdontologoService;
 import com.backend.clinicaodontologica.utils.JsonPrinter;
 import org.modelmapper.ModelMapper;
@@ -18,11 +21,11 @@ import java.util.List;
 public class OdontologoService implements IOdontologoService {
     private final Logger LOGGER = LoggerFactory.getLogger(OdontologoService.class);
 
-    private IDao<Odontologo> odontologoIDao;
+    private IOdontologoRepository odontologoRepository;
     private ModelMapper modelMapper;
 
-    public OdontologoService(IDao<Odontologo> odontologoIDao, ModelMapper modelMapper) {
-        this.odontologoIDao = odontologoIDao;
+    public OdontologoService(private IOdontologoRepository odontologoRepository, ModelMapper modelMapper) {
+        this.odontologoRepository = odontologoRepository;
         this.modelMapper = modelMapper;
         configureMapping();
     }
@@ -33,7 +36,7 @@ public class OdontologoService implements IOdontologoService {
         //convertimos mediante el mapper de dto a entidad
         Odontologo odontologoEntidad = modelMapper.map(odontologo, Odontologo.class);
         //lamamos a la capa de persistencia
-        Odontologo odontologoPersistido = odontologoIDao.registrar(odontologoEntidad);
+        Odontologo odontologoPersistido = odontologoRepository.save((odontologoEntidad));
         //transformamos la entidad obtenida en salidaDto
         OdontologoSalidaDto odontologoSalidaDto = modelMapper.map(odontologoPersistido, OdontologoSalidaDto.class);
 
@@ -42,8 +45,8 @@ public class OdontologoService implements IOdontologoService {
     }
 
     @Override
-    public OdontologoSalidaDto buscarOdontologoPorId(int id) {
-        Odontologo odontologoEncontrado = odontologoIDao.buscarPorId(id);
+    public OdontologoSalidaDto buscarOdontologoPorId(Long id) {
+        Odontologo odontologoEncontrado = odontologoRepository.findById(id).orElse(null);
         OdontologoSalidaDto odontologoSalidaDto = null;
 
         if(odontologoEncontrado != null) {
@@ -55,7 +58,7 @@ public class OdontologoService implements IOdontologoService {
     }
 
     public List<OdontologoSalidaDto> listarOdontologos() {
-        List<OdontologoSalidaDto> odontologosSalidaDto = odontologoIDao.listarTodos()
+        List<OdontologoSalidaDto> odontologosSalidaDto = odontologoRepository.findAll()
                 .stream()
                 .map(odontologo -> modelMapper.map(odontologo, OdontologoSalidaDto.class))
                 .toList();
@@ -65,20 +68,40 @@ public class OdontologoService implements IOdontologoService {
     }
 
     @Override
-    public void eliminarOdontologo(int id) {
-        odontologoIDao.eliminar(id);
+    public void eliminarOdontologo(Long id) {
+        boolean odontologoEncontrado = odontologoRepository.findById(id).isPresent();
+
+        if (odontologoEncontrado) {
+            odontologoRepository.deleteById(id);
+            LOGGER.warn("Se ha eliminado el odontologo con id " + id);
+        } else {
+            LOGGER.error("No se ha encontrado el odontologo con id " + id);
+            // Lanzar excepción
+        }
     }
 
     @Override
-    public Odontologo actualizarOdontologo(OdontologoEntradaDto odontologo) {
+    public OdontologoSalidaDto actualizarOdontologo(OdontologoModificacionEntradaDto odontologo) {
         //convertimos mediante el mapper de dto a entidad
         Odontologo odontologoEntidad = modelMapper.map(odontologo, Odontologo.class);
         //lamamos a la capa de persistencia
-        return odontologoIDao.actualizar(odontologoEntidad);
+        boolean odontologoEncontrado = odontologoRepository.findById(odontologoEntidad.getId()).isPresent();
+        OdontologoSalidaDto odontologoSalidaDto = null;
+
+        if (odontologoEncontrado) {
+            odontologoRepository.save(odontologoEntidad);
+            odontologoSalidaDto = modelMapper.map(odontologoEntidad, OdontologoSalidaDto.class);
+            LOGGER.warn("Odontologo actualizado " + JsonPrinter.toString(odontologo));
+        } else {
+            LOGGER.error("No fue posible actualizar el odontologo porque no se encuentra en nuestra base de datos");
+            // Lanzar excepción
+        }
+        return odontologoSalidaDto;
     }
 
     private void configureMapping() {
         modelMapper.typeMap(OdontologoEntradaDto.class, Odontologo.class);
         modelMapper.typeMap(Odontologo.class, OdontologoSalidaDto.class);
+        modelMapper.typeMap(OdontologoModificacionEntradaDto.class, Odontologo.class);
     }
 }

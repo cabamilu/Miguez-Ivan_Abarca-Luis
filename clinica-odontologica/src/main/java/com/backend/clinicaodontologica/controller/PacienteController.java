@@ -26,7 +26,7 @@ public class PacienteController {
         return new ResponseEntity<>(iPacienteService.registrarPaciente(paciente), HttpStatus.CREATED);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<PacienteSalidaDto> buscarPacientePorId(@PathVariable int id) {
+    public ResponseEntity<PacienteSalidaDto> buscarPacientePorId(@PathVariable Long id) {
         return new ResponseEntity<>(iPacienteService.buscarPacientePorId(id), HttpStatus.OK);
     }
     @GetMapping

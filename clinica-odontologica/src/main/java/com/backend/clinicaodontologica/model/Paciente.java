@@ -1,19 +1,31 @@
 package com.backend.clinicaodontologica.model;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "PACIENTES")
 public class Paciente {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Column(length = 50, nullable = false)
     private String nombre;
+    @Column(length = 50, nullable = false)
     private String apellido;
+    @Column(length = 12, nullable = false)
     private int dni;
+    @Column(nullable = false)
     private LocalDate fechaIngreso;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "domicilio_id")
     private Domicilio domicilio;
 
     public Paciente() {
     }
 
-    public Paciente(int id, String nombre, String apellido, int dni, LocalDate fechaIngreso, Domicilio domicilio) {
+    public Paciente(Long id, String nombre, String apellido, int dni, LocalDate fechaIngreso, Domicilio domicilio) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -30,11 +42,11 @@ public class Paciente {
         this.domicilio = domicilio;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
