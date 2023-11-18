@@ -1,5 +1,7 @@
 package com.backend.clinicaodontologica.dto.salida.paciente;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.LocalDate;
 
 public class PacienteSalidaDto {
@@ -8,6 +10,7 @@ public class PacienteSalidaDto {
     private String apellido;
     private int dni;
     private LocalDate fechaIngreso;
+    @JsonProperty("domicilio")
     private DomicilioSalidaDto domicilioSalidaDto;
 
     public PacienteSalidaDto() {
