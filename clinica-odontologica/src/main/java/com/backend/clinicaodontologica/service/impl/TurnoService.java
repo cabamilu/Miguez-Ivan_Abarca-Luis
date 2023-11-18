@@ -61,7 +61,7 @@ public class TurnoService implements ITurnoService {
     public List<TurnoSalidaDto> listarTurnos() {
         List<TurnoSalidaDto> turnosSalidaDto = turnoRepository.findAll()
                 .stream()
-                .map(paciente -> modelMapper.map(paciente, TurnoSalidaDto.class))
+                .map(turno -> modelMapper.map(turno, TurnoSalidaDto.class))
                 .toList();
 
         LOGGER.info("Listado de todos los turnos: {}", JsonPrinter.toString(turnosSalidaDto));
