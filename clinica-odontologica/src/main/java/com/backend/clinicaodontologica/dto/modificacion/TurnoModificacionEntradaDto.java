@@ -13,26 +13,22 @@ import java.time.LocalDateTime;
 public class TurnoModificacionEntradaDto {
     @NotNull(message = "Debe proveerse el id del turno a modificar")
     private Long id;
-    @FutureOrPresent(message = "La fecha y hora no pueden ser anterior a la del día de hoy")
-    @NotNull(message = "Debe especificarse la fecha y hora del turno")
+    @FutureOrPresent(message = "La fecha y hora del turno a modificar no pueden ser anterior a la del día de hoy")
+    @NotNull(message = "Debe especificarse la fecha y hora del turno a modificar")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime fechaYHora;
-    @NotNull(message = "El odontologo del turno no puede ser nulo")
-    @JsonProperty("odontologo")
-    @Valid
-    private OdontologoModificacionEntradaDto odontologo;
-    @NotNull(message = "El paciente del turno no puede ser nulo")
-    @JsonProperty("paciente")
-    @Valid
-    private PacienteModificacionEntradaDto paciente;
+    @NotNull(message = "El id del odontologo del turno a modificar no puede ser nulo")
+    private Long odontologoId;
+    @NotNull(message = "El id del paciente del turno a modificar no puede ser nulo")
+    private Long pacienteId;
 
     public TurnoModificacionEntradaDto() {
     }
-    public TurnoModificacionEntradaDto(Long id, LocalDateTime fechaYHora, OdontologoModificacionEntradaDto odontologo, PacienteModificacionEntradaDto paciente) {
+    public TurnoModificacionEntradaDto(Long id, LocalDateTime fechaYHora, Long odontologoId, Long pacienteId) {
         this.id = id;
         this.fechaYHora = fechaYHora;
-        this.odontologo = odontologo;
-        this.paciente = paciente;
+        this.odontologoId = odontologoId;
+        this.pacienteId = pacienteId;
     }
 
     public Long getId() {
@@ -51,19 +47,19 @@ public class TurnoModificacionEntradaDto {
         this.fechaYHora = fechaYHora;
     }
 
-    public OdontologoModificacionEntradaDto getOdontologo() {
-        return odontologo;
+    public Long getOdontologoId() {
+        return odontologoId;
     }
 
-    public void setOdontologo(OdontologoModificacionEntradaDto odontologo) {
-        this.odontologo = odontologo;
+    public void setOdontologoId(Long odontologoId) {
+        this.odontologoId = odontologoId;
     }
 
-    public PacienteModificacionEntradaDto getPaciente() {
-        return paciente;
+    public Long getPacienteId() {
+        return pacienteId;
     }
 
-    public void setPaciente(PacienteModificacionEntradaDto paciente) {
-        this.paciente = paciente;
+    public void setPacienteId(Long pacienteId) {
+        this.pacienteId = pacienteId;
     }
 }

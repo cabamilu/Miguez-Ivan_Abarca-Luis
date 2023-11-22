@@ -3,6 +3,7 @@ package com.backend.clinicaodontologica.service.impl;
 import com.backend.clinicaodontologica.dto.entrada.paciente.PacienteEntradaDto;
 import com.backend.clinicaodontologica.dto.modificacion.PacienteModificacionEntradaDto;
 import com.backend.clinicaodontologica.dto.salida.paciente.PacienteSalidaDto;
+import com.backend.clinicaodontologica.exceptions.ResourceNotFoundException;
 import com.backend.clinicaodontologica.model.Paciente;
 import com.backend.clinicaodontologica.repository.IPacienteRepository;
 import com.backend.clinicaodontologica.service.IPacienteService;
@@ -65,7 +66,7 @@ public class PacienteService implements IPacienteService {
     }
 
     @Override
-    public void eliminarPaciente(Long id) {
+    public void eliminarPaciente(Long id) throws ResourceNotFoundException {
         boolean pacienteEncontrado = pacienteRepository.findById(id).isPresent();
 
         if (pacienteEncontrado) {
@@ -73,7 +74,7 @@ public class PacienteService implements IPacienteService {
             LOGGER.warn("Se ha eliminado el paciente con id " + id);
         } else {
             LOGGER.error("No se ha encontrado el paciente con id " + id);
-            // Lanzar excepción
+            throw new ResourceNotFoundException("No se ha encontrado el paciente con id " + id);
         }
     }
 
