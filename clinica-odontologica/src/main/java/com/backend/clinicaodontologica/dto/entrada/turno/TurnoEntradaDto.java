@@ -1,9 +1,6 @@
 package com.backend.clinicaodontologica.dto.entrada.turno;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import javax.validation.Valid;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -13,21 +10,17 @@ public class TurnoEntradaDto {
     @NotNull(message = "Debe especificarse la fecha y hora del turno")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime fechaYHora;
-    @NotNull(message = "El odontologo del turno no puede ser nulo")
-    @JsonProperty("odontologo")
-    @Valid
-    private OdontologoTurnoEntradaDto odontologo;
-    @NotNull(message = "El paciente del turno no puede ser nulo")
-    @JsonProperty("paciente")
-    @Valid
-    private PacienteTurnoEntradaDto paciente;
+    @NotNull(message = "El id del odontologo del turno no puede ser nulo")
+    private Long odontologoId;
+    @NotNull(message = "El id del paciente del turno no puede ser nulo")
+    private Long pacienteId;
 
     public TurnoEntradaDto() {
     }
-    public TurnoEntradaDto(LocalDateTime fechaYHora, OdontologoTurnoEntradaDto odontologo, PacienteTurnoEntradaDto paciente) {
+    public TurnoEntradaDto(LocalDateTime fechaYHora, Long odontologoId, Long pacienteId) {
         this.fechaYHora = fechaYHora;
-        this.odontologo = odontologo;
-        this.paciente = paciente;
+        this.odontologoId = odontologoId;
+        this.pacienteId = pacienteId;
     }
 
     public LocalDateTime getFechaYHora() {
@@ -38,19 +31,19 @@ public class TurnoEntradaDto {
         this.fechaYHora = fechaYHora;
     }
 
-    public OdontologoTurnoEntradaDto getOdontologo() {
-        return odontologo;
+    public Long getOdontologoId() {
+        return odontologoId;
     }
 
-    public void setOdontologo(OdontologoTurnoEntradaDto odontologo) {
-        this.odontologo = odontologo;
+    public void setOdontologoId(Long odontologoId) {
+        this.odontologoId = odontologoId;
     }
 
-    public PacienteTurnoEntradaDto getPaciente() {
-        return paciente;
+    public Long getPacienteId() {
+        return pacienteId;
     }
 
-    public void setPaciente(PacienteTurnoEntradaDto paciente) {
-        this.paciente = paciente;
+    public void setPacienteId(Long pacienteId) {
+        this.pacienteId = pacienteId;
     }
 }

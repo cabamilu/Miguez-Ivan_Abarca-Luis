@@ -2,13 +2,16 @@ package com.backend.clinicaodontologica.dto.salida.turno;
 
 import com.backend.clinicaodontologica.dto.salida.odontologo.OdontologoSalidaDto;
 import com.backend.clinicaodontologica.dto.salida.paciente.PacienteSalidaDto;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
 
 public class TurnoSalidaDto {
     private Long id;
     private LocalDateTime fechaYHora;
+    @JsonProperty("odontologo")
     private OdontologoSalidaDto odontologo;
+    @JsonProperty("paciente")
     private PacienteSalidaDto paciente;
 
     public TurnoSalidaDto() {
