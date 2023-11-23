@@ -1,46 +1,40 @@
 package com.backend.clinicaodontologica.service;
 
-import com.backend.clinicaodontologica.dao.IDao;
-import com.backend.clinicaodontologica.dao.impl.OdontologoDAOH2;
-import com.backend.clinicaodontologica.model.Odontologo;
+import com.backend.clinicaodontologica.dto.entrada.odontologo.OdontologoEntradaDto;
+import com.backend.clinicaodontologica.dto.salida.odontologo.OdontologoSalidaDto;
 import com.backend.clinicaodontologica.service.impl.OdontologoService;
+import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-class OdontologoServiceTest {
-//    private OdontologoService odontologoService;
-//
-//    @BeforeAll
-//    static void doBefore() {
-//        Connection connection = null;
-//        try {
-//            Class.forName("org.h2.Driver");
-//            connection = DriverManager.getConnection("jdbc:h2:~/clinica-odontologica;INIT=RUNSCRIPT FROM 'test.sql'", "sa", "sa");
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                connection.close();
-//            } catch (Exception ex) {
-//                ex.printStackTrace();
-//            }
-//        }
-//    }
-//
-//    @Test
-//    void listarOdontologosEnBaseDatosH2() {
-//        IDao<Odontologo> odontologoDAOH2 = new OdontologoDAOH2();
-//        odontologoService = new OdontologoService(odontologoDAOH2);
-//
-//        List<Odontologo> odontologos = odontologoService.listarOdontologos();
-//
-//        assertEquals( 2, odontologos.size());
-//    }
+@SpringBootTest
+@RunWith(SpringRunner.class)
+@Transactional
+public class OdontologoServiceTest {
+    @Autowired
+    private OdontologoService odontologoService;
+
+    @Test
+    public void deberiaRetornarUnaListaVacia() {
+        List<OdontologoSalidaDto> odontologos = odontologoService.listarOdontologos();
+
+        assertTrue(odontologos.isEmpty());
+    }
+
+    @Test
+    public void deberiaRegistrarUnOdontologo() {
+        OdontologoEntradaDto odontologoEntradaDto = new OdontologoEntradaDto(12345679, "Mario", "Martinez");
+
+        OdontologoSalidaDto odontologoSalidaDto = odontologoService.registrarOdontologo(odontologoEntradaDto);
+
+        assertTrue(odontologoSalidaDto.getId() != 0);
+    }
 }
