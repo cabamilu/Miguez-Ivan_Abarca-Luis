@@ -15,7 +15,7 @@ public class TurnoModificacionEntradaDto {
     private Long id;
     @FutureOrPresent(message = "La fecha y hora del turno a modificar no pueden ser anterior a la del día de hoy")
     @NotNull(message = "Debe especificarse la fecha y hora del turno a modificar")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime fechaYHora;
     @NotNull(message = "El id del odontologo del turno a modificar no puede ser nulo")
     private Long odontologoId;

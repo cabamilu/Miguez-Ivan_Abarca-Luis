@@ -17,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@Transactional
 public class OdontologoServiceTest {
     @Autowired
     private OdontologoService odontologoService;
@@ -30,6 +29,7 @@ public class OdontologoServiceTest {
     }
 
     @Test
+    @Transactional
     public void deberiaRegistrarUnOdontologo() {
         OdontologoEntradaDto odontologoEntradaDto = new OdontologoEntradaDto(12345679, "Mario", "Martinez");
 

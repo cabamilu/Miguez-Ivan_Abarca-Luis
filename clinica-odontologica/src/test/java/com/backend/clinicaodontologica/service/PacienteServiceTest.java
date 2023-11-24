@@ -18,7 +18,6 @@ import java.util.List;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@Transactional
 public class PacienteServiceTest {
 
     @Autowired
@@ -31,6 +30,7 @@ public class PacienteServiceTest {
     }
 
     @Test
+    @Transactional
     public void deberiaRegistrarUnPaciente() {
         DomicilioEntradaDto domicilioEntradaDto = new DomicilioEntradaDto("Los Alerces", 1428, "Puerto Montt", "Los Lagos");
         PacienteEntradaDto pacienteEntradaDto = new PacienteEntradaDto("Pedro", "Fernandez", 12345678, LocalDate.of(2023, 11, 30), domicilioEntradaDto);
