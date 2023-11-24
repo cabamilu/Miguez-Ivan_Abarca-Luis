@@ -16,7 +16,6 @@ import com.backend.clinicaodontologica.utils.JsonPrinter;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -127,11 +126,10 @@ public class TurnoService implements ITurnoService {
     }
 
     private void configureMapping() {
-        modelMapper.getConfiguration().setAmbiguityIgnored(true);
         modelMapper.typeMap(TurnoEntradaDto.class, Turno.class);
         modelMapper.typeMap(Turno.class, TurnoSalidaDto.class)
-                .addMappings(modelMapper -> modelMapper.map(Turno::getOdontologo, TurnoSalidaDto::setOdontologo))
-                .addMappings(modelMapper -> modelMapper.map(Turno::getPaciente, TurnoSalidaDto::setPaciente));;
+                .addMappings(modelMapper -> modelMapper.map(Turno::getOdontologo, TurnoSalidaDto::setOdontologoSalidaDto))
+                .addMappings(modelMapper -> modelMapper.map(Turno::getPaciente, TurnoSalidaDto::setPacienteSalidaDto));;
         modelMapper.typeMap(TurnoModificacionEntradaDto.class, Turno.class);
     }
 }

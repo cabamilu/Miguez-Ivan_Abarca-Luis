@@ -46,4 +46,8 @@ public class TurnoEntradaDto {
     public void setPacienteId(Long pacienteId) {
         this.pacienteId = pacienteId;
     }
+
+    public Long getId() {
+        return null;
+    }
 }
