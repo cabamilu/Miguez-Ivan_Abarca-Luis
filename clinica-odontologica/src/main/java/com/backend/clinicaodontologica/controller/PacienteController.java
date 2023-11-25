@@ -19,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/pacientes")
+@CrossOrigin
 public class PacienteController {
     private IPacienteService iPacienteService;
 
