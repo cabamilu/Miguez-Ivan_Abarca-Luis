@@ -6,11 +6,9 @@ import com.backend.clinicaodontologica.dto.salida.paciente.PacienteSalidaDto;
 import com.backend.clinicaodontologica.exceptions.ResourceNotFoundException;
 import com.backend.clinicaodontologica.service.impl.PacienteService;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.test.context.TestPropertySource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,32 +16,40 @@ import java.time.LocalDate;
 import java.util.List;
 
 @SpringBootTest
-@ExtendWith(SpringExtension.class)
-public class PacienteServiceTest {
+@TestPropertySource(locations = "classpath:application-test.properties")
+class PacienteServiceTest {
 
     @Autowired
     private PacienteService pacienteService;
     @Test
-    public void deberiaRetornarUnaListaNoVacia() {
+    void deberiaRetornarUnaListaNoVacia() {
         List<PacienteSalidaDto> pacientes = pacienteService.listarPacientes();
 
         assertFalse(pacientes.isEmpty());
     }
 
     @Test
-    @Transactional
-    public void deberiaRegistrarUnPaciente() {
-        DomicilioEntradaDto domicilioEntradaDto = new DomicilioEntradaDto("Los Alerces", 1428, "Puerto Montt", "Los Lagos");
-        PacienteEntradaDto pacienteEntradaDto = new PacienteEntradaDto("Pedro", "Fernandez", 12345678, LocalDate.of(2023, 11, 30), domicilioEntradaDto);
+    void deberiaRegistrarUnPaciente() {
+        DomicilioEntradaDto domicilioEntradaDto = new DomicilioEntradaDto("Las Gaviotas", 1428, "Santiago centro", "Santiago");
+        PacienteEntradaDto pacienteEntradaDto = new PacienteEntradaDto("Pedro", "Ramirez", 12345678, LocalDate.of(2023, 11, 30), domicilioEntradaDto);
 
         PacienteSalidaDto pacienteSalidaDto = pacienteService.registrarPaciente(pacienteEntradaDto);
 
-        assertTrue(pacienteSalidaDto.getId() != 0);
+        assertNotNull(pacienteSalidaDto.getId());
+        assertEquals("Pedro", pacienteSalidaDto.getNombre());
+        assertEquals("Ramirez", pacienteSalidaDto.getApellido());
+        assertEquals(12345678, pacienteSalidaDto.getDni());
+        assertEquals(pacienteSalidaDto.getFechaIngreso(), LocalDate.of(2023, 11, 30));
+        assertNotNull(pacienteSalidaDto.getDomicilioSalidaDto().getId());
+        assertEquals(pacienteSalidaDto.getDomicilioSalidaDto().getCalle(), "Las Gaviotas");
+        assertEquals(pacienteSalidaDto.getDomicilioSalidaDto().getNumero(), 1428);
+        assertEquals(pacienteSalidaDto.getDomicilioSalidaDto().getLocalidad(), "Santiago centro");
+        assertEquals(pacienteSalidaDto.getDomicilioSalidaDto().getProvincia(), "Santiago");
     }
 
     @Test
-    public void deberiaBuscarUnPacientePorId() {
-        Long pacienteIdPrecargado = Long.valueOf(1);
+    void deberiaBuscarUnPacientePorId() {
+        Long pacienteIdPrecargado = 1L;
 
         PacienteSalidaDto pacienteSalidaDto = pacienteService.buscarPacientePorId(pacienteIdPrecargado);
 
@@ -61,9 +67,8 @@ public class PacienteServiceTest {
     }
 
     @Test
-    @Transactional
-    public void deberiaArrojarUnaExcepcionAlEliminarPacienteSiElIdDelPacienteNoExiste() {
-        Exception exception = assertThrows( ResourceNotFoundException.class, () -> {pacienteService.eliminarPaciente(Long.valueOf(10));});
+    void deberiaArrojarUnaExcepcionAlEliminarPacienteSiElIdDelPacienteNoExiste() {
+        Exception exception = assertThrows( ResourceNotFoundException.class, () -> {pacienteService.eliminarPaciente(10L);});
 
         String expectedMessage = "No se ha encontrado el paciente con id 10";
         assertTrue(exception.getMessage().contains(expectedMessage));

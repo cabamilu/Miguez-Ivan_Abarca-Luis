@@ -54,11 +54,11 @@ public class TurnoService implements ITurnoService {
 
             LOGGER.info("TurnoSalidaDto: " + JsonPrinter.toString(turnoSalidaDto));
         } else if (pacienteEncontrado == null && odontologoEncontrado != null) {
-            throw new BadRequestException("Debe indicar el id del paciente");
+            throw new BadRequestException("El paciente no existe");
         } else if (pacienteEncontrado != null) {
-            throw new BadRequestException("Debe indicar el id del odontologo");
+            throw new BadRequestException("El odontologo no existe");
         } else {
-            throw new BadRequestException("Debe indicar el id del paciente y el id del odontologo");
+            throw new BadRequestException("No existen ni paciente ni el odontologo");
         }
 
         return turnoSalidaDto;

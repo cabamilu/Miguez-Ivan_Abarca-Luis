@@ -1,13 +1,11 @@
 package com.backend.clinicaodontologica.dto.entrada.odontologo;
 
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 public class OdontologoEntradaDto {
     @NotNull(message = "El campo numero matricula no puede ser nulo")
     @Digits(integer = 10, fraction = 0, message = "El número matricula debe tener como máximo 10 dígitos")
+    @Min( value = 1, message = "El número de marícula debe ser mayor que 0 (cero)")
     //@Pattern(regexp = "\\d{1,8}", message = "El número matricula debe tener como máximo 8 dígitos")
     private int numeroMatricula;
     @NotNull(message = "El nombre del odontólogo no puede ser nulo")

@@ -20,6 +20,7 @@ public class PacienteEntradaDto {
 
     @NotNull(message = "El dni del paciente no puede ser nulo")
     @Digits(integer = 12, fraction = 0, message = "El dni debe tener como máximo 12 dígitos")
+    @Min(value = 1, message = "El dni debe ser mayor que 0 (cero)")
     private int dni;
 
     @FutureOrPresent(message = "La fecha no puede ser anterior al día de hoy")

@@ -6,11 +6,9 @@ import com.backend.clinicaodontologica.exceptions.BadRequestException;
 import com.backend.clinicaodontologica.exceptions.ResourceNotFoundException;
 import com.backend.clinicaodontologica.service.impl.TurnoService;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,60 +16,56 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@ExtendWith(SpringExtension.class)
-public class TurnoServiceTest {
+@TestPropertySource(locations = "classpath:application-test.properties")
+class TurnoServiceTest {
     @Autowired
     private TurnoService turnoService;
 
     @Test
-    public void deberiaRetornarUnaListaNoVacia() {
+    void deberiaRetornarUnaListaNoVacia() {
         List<TurnoSalidaDto> turnos = turnoService.listarTurnos();
 
         assertFalse(turnos.isEmpty());
     }
     @Test
-    @Transactional
-    public void deberiaRegistrarUnTurno() throws BadRequestException {
-        TurnoEntradaDto turnoEntradaDto = new TurnoEntradaDto(LocalDateTime.of(2023, 11, 30, 14,10), Long.valueOf(2), Long.valueOf(2));
+    void deberiaRegistrarUnTurno() throws BadRequestException {
+        TurnoEntradaDto turnoEntradaDto = new TurnoEntradaDto(LocalDateTime.of(2023, 11, 30, 14,10), 2L, 2L);
 
         TurnoSalidaDto turnoSalidaDto = turnoService.registrarTurno(turnoEntradaDto);
 
-        assertTrue(turnoSalidaDto.getId() != 0);
+        assertNotNull(turnoSalidaDto.getId());
     }
 
     @Test
-    @Transactional
-    public void deberiaArrojarUnaExcepcionSiElIdDelOdontologoNoExiste() {
-        TurnoEntradaDto turnoEntradaDto = new TurnoEntradaDto(LocalDateTime.of(2023, 11, 30, 14,10), Long.valueOf(10), Long.valueOf(2));
+    void deberiaArrojarUnaExcepcionSiElIdDelOdontologoNoExiste() {
+        TurnoEntradaDto turnoEntradaDto = new TurnoEntradaDto(LocalDateTime.of(2023, 11, 30, 14,10), 10L, 2L);
         Exception exception = assertThrows(BadRequestException.class, () -> {turnoService.registrarTurno(turnoEntradaDto);});
 
-        String expectedMessage = "Debe indicar el id del odontologo";
+        String expectedMessage = "El odontologo no existe";
         assertTrue(exception.getMessage().contains(expectedMessage));
     }
 
     @Test
-    @Transactional
-    public void deberiaArrojarUnaExcepcionSiElIdDelOdontologoYDelPacienteNoExisten() {
-        TurnoEntradaDto turnoEntradaDto = new TurnoEntradaDto(LocalDateTime.of(2023, 11, 30, 14,10), Long.valueOf(10), Long.valueOf(10));
+    void deberiaArrojarUnaExcepcionSiElIdDelOdontologoYDelPacienteNoExisten() {
+        TurnoEntradaDto turnoEntradaDto = new TurnoEntradaDto(LocalDateTime.of(2023, 11, 30, 14,10), 10L, 10L);
         Exception exception = assertThrows(BadRequestException.class, () -> {turnoService.registrarTurno(turnoEntradaDto);});
 
-        String expectedMessage = "Debe indicar el id del paciente y el id del odontologo";
+        String expectedMessage = "No existen ni paciente ni el odontologo";
         assertTrue(exception.getMessage().contains(expectedMessage));
     }
 
     @Test
-    @Transactional
-    public void deberiaArrojarUnaExcepcionSiElIdDelPacienteNoExiste() {
-        TurnoEntradaDto turnoEntradaDto = new TurnoEntradaDto(LocalDateTime.of(2023, 11, 30, 14,10), Long.valueOf(1), Long.valueOf(10));
+    void deberiaArrojarUnaExcepcionSiElIdDelPacienteNoExiste() {
+        TurnoEntradaDto turnoEntradaDto = new TurnoEntradaDto(LocalDateTime.of(2023, 11, 30, 14,10), 1L, 10L);
         Exception exception = assertThrows(BadRequestException.class, () -> {turnoService.registrarTurno(turnoEntradaDto);});
 
-        String expectedMessage = "Debe indicar el id del paciente";
+        String expectedMessage = "El paciente no existe";
         assertTrue(exception.getMessage().contains(expectedMessage));
     }
 
     @Test
-    public void deberiaBuscarUnTurnoPorId() {
-        Long turnoIdPrecargado = Long.valueOf(1);
+    void deberiaBuscarUnTurnoPorId() {
+        Long turnoIdPrecargado = 1L;
 
         TurnoSalidaDto turnoSalidaDto = turnoService.buscarTurnoPorId(turnoIdPrecargado);
 
@@ -82,9 +76,8 @@ public class TurnoServiceTest {
     }
 
     @Test
-    @Transactional
-    public void deberiaArrojarUnaExcepcionAlEliminarTurnoSiElIdDelTurnoNoExiste() {
-        Exception exception = assertThrows( ResourceNotFoundException.class, () -> {turnoService.eliminarTurno(Long.valueOf(10));});
+    void deberiaArrojarUnaExcepcionAlEliminarTurnoSiElIdDelTurnoNoExiste() {
+        Exception exception = assertThrows( ResourceNotFoundException.class, () -> {turnoService.eliminarTurno(10L);});
 
         String expectedMessage = "No se ha encontrado el turno con id 10";
         assertTrue(exception.getMessage().contains(expectedMessage));
