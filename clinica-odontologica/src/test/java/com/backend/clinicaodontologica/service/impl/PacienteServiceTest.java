@@ -1,10 +1,10 @@
-package com.backend.clinicaodontologica.service;
+package com.backend.clinicaodontologica.service.impl;
 
 import com.backend.clinicaodontologica.dto.entrada.paciente.DomicilioEntradaDto;
 import com.backend.clinicaodontologica.dto.entrada.paciente.PacienteEntradaDto;
 import com.backend.clinicaodontologica.dto.salida.paciente.PacienteSalidaDto;
 import com.backend.clinicaodontologica.exceptions.ResourceNotFoundException;
-import com.backend.clinicaodontologica.service.impl.PacienteService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +21,18 @@ class PacienteServiceTest {
 
     @Autowired
     private PacienteService pacienteService;
+
+    @BeforeEach
+    void doBefore() {
+        PacienteSalidaDto pacienteSalidaDto = pacienteService.buscarPacientePorId(1L);
+
+        if (pacienteSalidaDto == null) {
+            DomicilioEntradaDto domicilioEntradaDto = new DomicilioEntradaDto("Los Alerces", 2884, "Puerto Montt", "Los Lagos");
+            PacienteEntradaDto pacienteEntradaDto = new PacienteEntradaDto("Mario", "Fernandez", 1122334455, LocalDate.of(2023, 11, 1), domicilioEntradaDto);
+
+            pacienteService.registrarPaciente(pacienteEntradaDto);
+        }
+    }
     @Test
     void deberiaRetornarUnaListaNoVacia() {
         List<PacienteSalidaDto> pacientes = pacienteService.listarPacientes();

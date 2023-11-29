@@ -1,9 +1,9 @@
-package com.backend.clinicaodontologica.service;
+package com.backend.clinicaodontologica.service.impl;
 
 import com.backend.clinicaodontologica.dto.entrada.odontologo.OdontologoEntradaDto;
 import com.backend.clinicaodontologica.dto.salida.odontologo.OdontologoSalidaDto;
 import com.backend.clinicaodontologica.exceptions.ResourceNotFoundException;
-import com.backend.clinicaodontologica.service.impl.OdontologoService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +18,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class OdontologoServiceTest {
     @Autowired
     private OdontologoService odontologoService;
+
+    @BeforeEach
+    void doBefore() {
+        OdontologoSalidaDto odontologoSalidaDto = odontologoService.buscarOdontologoPorId(1L);
+
+        if (odontologoSalidaDto == null) {
+            OdontologoEntradaDto odontologoEntradaDto = new OdontologoEntradaDto(12345678, "Juan", "Perez");
+            odontologoService.registrarOdontologo(odontologoEntradaDto);
+        }
+    }
 
     @Test
     void deberiaRetornarUnaListaNoVacia() {
