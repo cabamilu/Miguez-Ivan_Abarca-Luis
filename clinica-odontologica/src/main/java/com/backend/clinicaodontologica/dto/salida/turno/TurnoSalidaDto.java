@@ -1,26 +1,29 @@
 package com.backend.clinicaodontologica.dto.salida.turno;
 
-import com.backend.clinicaodontologica.dto.salida.odontologo.OdontologoSalidaDto;
-import com.backend.clinicaodontologica.dto.salida.paciente.PacienteSalidaDto;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
 
 public class TurnoSalidaDto {
     private Long id;
-    private LocalDateTime fechaYHora;
-    @JsonProperty("odontologo")
-    private OdontologoSalidaDto odontologoSalidaDto;
     @JsonProperty("paciente")
-    private PacienteSalidaDto pacienteSalidaDto;
+    private PacienteTurnoSalidaDto pacienteTurnoSalidaDto;
+    @JsonProperty("odontologo")
+    private OdontologoTurnoSalidaDto odontologoTurnoSalidaDto;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime fechaYHora;
 
     public TurnoSalidaDto() {
     }
-    public TurnoSalidaDto(Long id, LocalDateTime fechaYHora, OdontologoSalidaDto odontologoSalidaDto, PacienteSalidaDto pacienteSalidaDto) {
+
+    public TurnoSalidaDto(Long id, PacienteTurnoSalidaDto pacienteTurnoSalidaDto, OdontologoTurnoSalidaDto odontologoTurnoSalidaDto, LocalDateTime fechaYHora) {
         this.id = id;
+        this.pacienteTurnoSalidaDto = pacienteTurnoSalidaDto;
+        this.odontologoTurnoSalidaDto = odontologoTurnoSalidaDto;
         this.fechaYHora = fechaYHora;
-        this.odontologoSalidaDto = odontologoSalidaDto;
-        this.pacienteSalidaDto = pacienteSalidaDto;
     }
 
     public Long getId() {
@@ -31,6 +34,22 @@ public class TurnoSalidaDto {
         this.id = id;
     }
 
+    public PacienteTurnoSalidaDto getPacienteTurnoSalidaDto() {
+        return pacienteTurnoSalidaDto;
+    }
+
+    public void setPacienteTurnoSalidaDto(PacienteTurnoSalidaDto pacienteTurnoSalidaDto) {
+        this.pacienteTurnoSalidaDto = pacienteTurnoSalidaDto;
+    }
+
+    public OdontologoTurnoSalidaDto getOdontologoTurnoSalidaDto() {
+        return odontologoTurnoSalidaDto;
+    }
+
+    public void setOdontologoTurnoSalidaDto(OdontologoTurnoSalidaDto odontologoTurnoSalidaDto) {
+        this.odontologoTurnoSalidaDto = odontologoTurnoSalidaDto;
+    }
+
     public LocalDateTime getFechaYHora() {
         return fechaYHora;
     }
@@ -39,19 +58,9 @@ public class TurnoSalidaDto {
         this.fechaYHora = fechaYHora;
     }
 
-    public OdontologoSalidaDto getOdontologoSalidaDto() {
-        return odontologoSalidaDto;
-    }
 
-    public void setOdontologoSalidaDto(OdontologoSalidaDto odontologoSalidaDto) {
-        this.odontologoSalidaDto = odontologoSalidaDto;
-    }
-
-    public PacienteSalidaDto getPacienteSalidaDto() {
-        return pacienteSalidaDto;
-    }
-
-    public void setPacienteSalidaDto(PacienteSalidaDto pacienteSalidaDto) {
-        this.pacienteSalidaDto = pacienteSalidaDto;
+    @Override
+    public String toString() {
+        return "Id: " + id + " - Paciente: " + pacienteTurnoSalidaDto + " - Odontologo: " + odontologoTurnoSalidaDto + " - Fecha y hora: " + fechaYHora;
     }
 }
