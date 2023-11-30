@@ -23,7 +23,7 @@ window.addEventListener('load', function () {
 
   function renderizarPacientes() {
     const titulo = document.querySelector('.form-header h2');
-    titulo.textContent = "Seleccione Paciente";
+    titulo.textContent = listaPacientes.length === 0 ? 'No hay pacientes registrados' : 'Seleccione Paciente';
     const listadoPacientes = document.querySelector('#listado');
     listadoPacientes.innerHTML = "";
 
@@ -64,7 +64,7 @@ window.addEventListener('load', function () {
 
   function renderizarOdontologos() {
     const titulo = document.querySelector('.form-header h2');
-    titulo.textContent = "Seleccione Odontólogo";
+    titulo.textContent = listaOdontologos.length === 0 ? 'No hay odontólogos registrados' : 'Seleccione Odontólogo';
     const listadoOdontologos = document.querySelector('#listado');
     listadoOdontologos.innerHTML = "";
 
@@ -139,29 +139,23 @@ window.addEventListener('load', function () {
     };
     realizarRegister(settings);
     form.reset();
-    location.href = '/';
   }
 
   function realizarRegister(settings) {
     fetch(`${url}/turnos/registrar`, settings)
-        .then(response => {
-            console.log(response);
-
-            if (response.ok != true) {
-                alert("Alguno de los datos es incorrecto.");
-            } else {
-                alert("Se ha registrado un nuevo Turno.");
-            }
-
-            return response.json();
-
-        })
-        .then(data => {
-            console.log("Promesa cumplida:");
-            console.log(data);                
-        }).catch(err => {
-            console.log("Promesa rechazada:");
-            console.log(err);
-        })
-  };
+      .then(response => {
+        if (response.ok) {
+            return Promise.resolve('Se ha registrado un nuevo Turno.');
+        } else if (response.status === 400) {
+            return Promise.resolve('La fecha y hora deben ser posterior a las actuales');
+        } else {
+            return Promise.resolve('No fue posible registrar el nuevo turno');
+        }
+      })
+      .then(mensaje => {
+          alert(mensaje);                
+      }).catch(err => {
+          alert('No fue posible registrar el nuevo turno');
+      }).finally(() => setTimeout(() => (location.href = '/'), 200));
+};
 });

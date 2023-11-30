@@ -27,23 +27,22 @@ window.addEventListener('load', function () {
     function realizarRegister(settings) {
         fetch(`${url}/odontologos/registrar`, settings)
             .then(response => {
-                console.log(response);
-
-                if (response.ok != true) {
-                    alert("Alguno de los datos es incorrecto.");
+                if (response.ok) {
+                    return Promise.resolve({ mensaje: "Se ha registrado un nuevo Odontólogo."});
+                } else if (response.status === 400) {
+                    return response.json();
                 } else {
-                    alert("Se ha registrado un nuevo Odontólogo.");
+                    return Promise.resolve({mensaje: 'No fue posible registrar el nuevo odontólogo'});
                 }
-
-                return response.json();
-
             })
             .then(data => {
-                console.log("Promesa cumplida:");
-                console.log(data);                
+                let mensaje = '';
+                for (const property in data) {
+                    mensaje += `${data[property]}\n`;
+                }
+                alert(mensaje);                
             }).catch(err => {
-                console.log("Promesa rechazada:");
-                console.log(err);
+                alert('No fue posible registrar el nuevo odontólogo');
             })
     };
 
